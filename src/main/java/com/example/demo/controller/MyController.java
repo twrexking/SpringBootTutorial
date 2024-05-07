@@ -10,6 +10,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -43,5 +44,21 @@ public class MyController {
         } catch (JwtException e) {
             throw new BadCredentialsException(e.getMessage(), e);
         }
+    }
+
+    @GetMapping("/home")
+    public String home() {
+        var principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if ("anonymousUser".equals(principal)) {
+            return "你尚未經過身份認證";
+        }
+
+        var userDetails = (MemberUserDetails) principal;
+        return String.format("嗨，你的編號是%s%n帳號：%s%n暱稱：%s%n權限：%s",
+                userDetails.getId(),
+                userDetails.getUsername(),
+                userDetails.getNickname(),
+                userDetails.getAuthorities()
+        );
     }
 }
