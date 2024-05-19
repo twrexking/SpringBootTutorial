@@ -14,8 +14,8 @@ import java.util.List;
 @Repository
 public interface StudentRepository extends MongoRepository<Student, String> {
     Student findByName(String s);
-    List<Student> findByContactEmail(String email);
-    List<Student> findByContactPhone(String phone);
+    Student findByContactEmail(String s);
+    Student findByContactPhone(String s);
     List<Student> findByCertificatesType(String certType);
 
     List<Student> findByGradeGreaterThanEqual(int from);
