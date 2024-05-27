@@ -10,10 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.URI;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @RestController
 public class MyController {
@@ -25,7 +23,7 @@ public class MyController {
     public ResponseEntity<Void> createStudent(@RequestBody Student student) {
         studentRepository.save(student);
 
-        URI uri = ServletUriComponentsBuilder
+        var uri = ServletUriComponentsBuilder
                 .fromCurrentRequestUri()
                 .path("/{id}")
                 .build(Map.of("id", student.getId()));
@@ -35,7 +33,7 @@ public class MyController {
 
     @GetMapping("/students/{id}")
     public ResponseEntity<Student> getStudent(@PathVariable Long id) {
-        Optional<Student> studentOp = studentRepository.findById(id);
+        var studentOp = studentRepository.findById(id);
         return studentOp.isPresent()
                 ? ResponseEntity.ok(studentOp.get())
                 : ResponseEntity.notFound().build();
@@ -43,7 +41,7 @@ public class MyController {
 
     @GetMapping("/students/ids")
     public ResponseEntity<List<Student>> getStudents(@RequestParam List<Long> idList) {
-        List<Student> students = studentRepository.findAllById(idList);
+        var students = studentRepository.findAllById(idList);
         return ResponseEntity.ok(students);
     }
 
@@ -51,12 +49,12 @@ public class MyController {
     public ResponseEntity<Void> updateStudent(
             @PathVariable Long id, @RequestBody Student request
     ) {
-        Optional<Student> studentOp = studentRepository.findById(id);
+        var studentOp = studentRepository.findById(id);
         if (studentOp.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
 
-        Student student = studentOp.get();
+        var student = studentOp.get();
         student.setName(request.getName());
         student.setGrade(request.getGrade());
         student.setBloodType(request.getBloodType());
@@ -75,12 +73,14 @@ public class MyController {
 
     @GetMapping("/students")
     public ResponseEntity<List<Student>> getStudents(
-            @RequestParam(required = false) String sortField, @RequestParam(required = false) String sortDirection,
-            @RequestParam(required = false) Integer page, @RequestParam(required = false) Integer size
+            @RequestParam(required = false) String sortField,
+            @RequestParam(required = false) String sortDirection,
+            @RequestParam(required = false) Integer page,
+            @RequestParam(required = false) Integer size
     ) {
-        Sort sort = createSort(sortField, sortDirection);
-        Pageable pageable = createPageable(page, size, sort);
-        List<Student> students = studentRepository.find(pageable);
+        var sort = createSort(sortField, sortDirection);
+        var pageable = createPageable(page, size, sort);
+        var students = studentRepository.find(pageable);
 
         return ResponseEntity.ok(students);
     }
