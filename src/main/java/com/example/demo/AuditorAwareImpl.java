@@ -11,7 +11,7 @@ public class AuditorAwareImpl implements AuditorAware<String> {
 
     @Override
     public Optional<String> getCurrentAuditor() {
-        String randomId = UUID.randomUUID().toString();
+        var randomId = UUID.randomUUID().toString();
         return Optional.of(randomId);
     }
 }
