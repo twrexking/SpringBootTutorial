@@ -10,7 +10,10 @@ public class Student {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private int grade;
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @JoinColumn(name = "contact_id", referencedColumnName = "id")
+    private Contact contact;
 
     public Long getId() {
         return id;
@@ -28,11 +31,11 @@ public class Student {
         this.name = name;
     }
 
-    public int getGrade() {
-        return grade;
+    public Contact getContact() {
+        return contact;
     }
 
-    public void setGrade(int grade) {
-        this.grade = grade;
+    public void setContact(Contact contact) {
+        this.contact = contact;
     }
 }
