@@ -1,4 +1,7 @@
-package com.example.demo.entity;
+package com.example.demo.model.response;
+
+import com.example.demo.model.entity.Contact;
+import com.example.demo.model.entity.Student;
 
 public class StudentResponse {
     private Long id;

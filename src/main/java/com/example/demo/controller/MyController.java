@@ -1,8 +1,8 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.Contact;
-import com.example.demo.entity.Student;
-import com.example.demo.entity.StudentResponse;
+import com.example.demo.model.entity.Contact;
+import com.example.demo.model.entity.Student;
+import com.example.demo.model.response.StudentResponse;
 import com.example.demo.repository.ContactRepository;
 import com.example.demo.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
