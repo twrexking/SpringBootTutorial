@@ -10,8 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -28,21 +26,21 @@ public class MyController {
     public ResponseEntity<List<StudentResponse>> getStudents(
             @RequestParam(required = false, defaultValue = "") String name
     ) {
-        List<Student> students = studentRepository.findByNameLikeIgnoreCase("%" + name + "%");
-        Map<Student, Long> studentContactMap = students
+        var students = studentRepository.findByNameLikeIgnoreCase("%" + name + "%");
+        var studentContactMap = students
                 .stream()
                 .collect(Collectors.toMap(Function.identity(), s -> s.getContact().getId()));
 
-        List<Contact> contacts = contactRepository.findAllById(studentContactMap.values());
-        Map<Long, Contact> contactMap = contacts
+        var contacts = contactRepository.findAllById(studentContactMap.values());
+        var contactMap = contacts
                 .stream()
                 .collect(Collectors.toMap(Contact::getId, Function.identity()));
 
-        List<StudentResponse> responses = students
+        var responses = students
                 .stream()
                 .map(s -> {
-                    Long contactId = studentContactMap.get(s);
-                    Contact c = contactMap.get(contactId);
+                    var contactId = studentContactMap.get(s);
+                    var c = contactMap.get(contactId);
                     return StudentResponse.of(s, c);
                 })
                 .toList();
@@ -68,13 +66,13 @@ public class MyController {
     public ResponseEntity<Void> updateStudentContact(
             @PathVariable Long id, @RequestBody Contact request
     ) {
-        Optional<Student> studentOp = studentRepository.findById(id);
+        var studentOp = studentRepository.findById(id);
         if (studentOp.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
 
-        Student student = studentOp.get();
-        Contact contact = student.getContact();
+        var student = studentOp.get();
+        var contact = student.getContact();
         contact.setEmail(request.getEmail());
         contact.setPhone(request.getPhone());
         studentRepository.save(student);
