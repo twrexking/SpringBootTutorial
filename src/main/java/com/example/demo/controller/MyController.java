@@ -21,6 +21,7 @@ public class MyController {
 
     @PostMapping("/students")
     public ResponseEntity<Void> createStudent(@RequestBody Student student) {
+        student.setId(null);
         studentRepository.save(student);
 
         var uri = ServletUriComponentsBuilder
