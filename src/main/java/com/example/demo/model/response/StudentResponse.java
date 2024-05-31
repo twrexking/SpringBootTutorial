@@ -1,23 +1,10 @@
 package com.example.demo.model.response;
 
-import com.example.demo.model.entity.Contact;
-import com.example.demo.model.entity.Student;
-
 public class StudentResponse {
     private Long id;
     private String name;
     private String email;
     private String phone;
-
-    public static StudentResponse of(Student student, Contact contact) {
-        StudentResponse res =  new StudentResponse();
-        res.id = student.getId();
-        res.name = student.getName();
-        res.email = contact.getEmail();
-        res.phone = contact.getPhone();
-
-        return res;
-    }
 
     public Long getId() {
         return id;
