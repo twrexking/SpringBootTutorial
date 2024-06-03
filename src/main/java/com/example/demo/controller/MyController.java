@@ -99,13 +99,13 @@ public class MyController {
 
     @GetMapping("/departments/{id}/students")
     public ResponseEntity<List<StudentResponse>> getStudentsByDepartment(@PathVariable Long id) {
-        var deptOp = departmentRepository.findById(id);
-        if (deptOp.isEmpty()) {
+        var departmentOp = departmentRepository.findById(id);
+        if (departmentOp.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
 
-        var dept = deptOp.get();
-        var students = dept.getStudents();
+        var department = departmentOp.get();
+        var students = department.getStudents();
         var responses = students
                 .stream()
                 .map(s -> {
