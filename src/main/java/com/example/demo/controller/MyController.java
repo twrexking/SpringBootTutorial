@@ -17,6 +17,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -204,7 +208,7 @@ public class MyController {
         return ResponseEntity.ok(responses);
     }
 
-    private Map<Student, Contact> createStudentContactMap(List<Student> students) {
+    private Map<Student, Contact> createStudentContactMap(Collection<Student> students) {
         var studentContactIdMap = students
                 .stream()
                 .collect(Collectors.toMap(Function.identity(), s -> s.getContact().getId()));
@@ -224,7 +228,7 @@ public class MyController {
         return map;
     }
 
-    private Map<Student, Department> createStudentDepartmentMap(List<Student> students) {
+    private Map<Student, Department> createStudentDepartmentMap(Collection<Student> students) {
         var studentDepartmentIdMap = students
                 .stream()
                 .collect(Collectors.toMap(Function.identity(), s -> s.getDepartment().getId()));

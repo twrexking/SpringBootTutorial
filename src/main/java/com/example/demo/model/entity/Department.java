@@ -2,7 +2,7 @@ package com.example.demo.model.entity;
 
 import jakarta.persistence.*;
 
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "department")
@@ -15,7 +15,7 @@ public class Department {
     private String name;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "department")
-    private List<Student> students;
+    private Set<Student> students;
 
     public Long getId() {
         return id;
@@ -33,11 +33,11 @@ public class Department {
         this.name = name;
     }
 
-    public List<Student> getStudents() {
+    public Set<Student> getStudents() {
         return students;
     }
 
-    public void setStudents(List<Student> students) {
+    public void setStudents(Set<Student> students) {
         this.students = students;
     }
 }
