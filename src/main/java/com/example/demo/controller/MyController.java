@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -80,7 +81,7 @@ public class MyController {
         return ResponseEntity.noContent().build();
     }
 
-    private Map<Student, Contact> createStudentContactMap(List<Student> students) {
+    private Map<Student, Contact> createStudentContactMap(Collection<Student> students) {
         var studentContactIdMap = students
                 .stream()
                 .collect(Collectors.toMap(Function.identity(), s -> s.getContact().getId()));
